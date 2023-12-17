@@ -1,4 +1,5 @@
-import { Schema } from 'mongoose'
+import { Schema, model } from 'mongoose'
+import bcrypt from 'bcrypt'
 import { IUser } from '../interface/user'
 
 const UserSchema: Schema = new Schema(
@@ -30,10 +31,23 @@ const UserSchema: Schema = new Schema(
     },
   },
   {
-    timestamp: true,
-  }
+		timestamps: true
+	}
 )
 
 UserSchema.index({ email: 1 }, { unique: true })
 
-export default model<IUser>('users', UserSchema)
+UserSchema.pre('save', async function (next) {
+    const user = this
+    if (user.isModified('password') && user.password) {
+        const salt = await bcrypt.genSalt(10)
+        user.password = await bcrypt.hash(user.password, salt)
+    }
+    next()
+})
+
+UserSchema.methods.matchPassword = async function (password: string) {
+    return await bcrypt.compare(password, this.password)
+}
+
+export default model<IUser>('User', UserSchema)
