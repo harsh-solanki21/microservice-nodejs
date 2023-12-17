@@ -4,8 +4,8 @@
   "description": "order service",
   "main": "index.js",
   "scripts": {
-		"start": "tsc && node build/server.js",
-		"dev": "ts-node-dev --respawn --poll --files server.ts",
+		"start": "tsc && node build/index.ts.js",
+		"dev": "ts-node-dev --respawn --poll --files src/index.ts.ts",
     "test": "jest"
   },
   "keywords": [],
