@@ -3,7 +3,7 @@ import CreateChannel from '../config/rabbitmq'
 
 dotenv.config()
 
-const SubscribeMessage = async () => {
+const SubscribeMessage = async (subscribed_channel: string) => {
 	const channel = await CreateChannel()
 
   // await channel.assertExchange(process.env.EXCHANGE_NAME as string, 'direct', { durable: true })
@@ -26,10 +26,10 @@ const SubscribeMessage = async () => {
   //   }
   // )
 
-	channel.consume (
-		process.env.USER_CHANNEL as string,
+	await channel.consume (
+		subscribed_channel,
 		(message: any) => {
-			console.log(`Received message: ${message.content.toString()}`);
+			console.log(`Received message: ${JSON.parse(message.content.toString())}`)
 		},
 		{
 			noAck: true,

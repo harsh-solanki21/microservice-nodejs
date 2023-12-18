@@ -8,7 +8,7 @@ const PublishMessage = async (message: any) => {
 	
   // channel.publish(process.env.EXCHANGE_NAME as string, service, Buffer.from(message))
 	channel.sendToQueue(
-		process.env.USER_CHANNEL as string, 
+		process.env.USER_CHANNEL as string,
 		Buffer.from(
 			JSON.stringify({ message })
 		)
