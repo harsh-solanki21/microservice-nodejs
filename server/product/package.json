@@ -4,8 +4,8 @@
   "description": "product service",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node build/index.ts.js",
-    "dev": "ts-node-dev --respawn --poll --files src/index.ts.ts",
+    "start": "tsc && node build/index.js",
+    "dev": "ts-node-dev --respawn --poll --files src/index.ts",
     "test": "jest"
   },
   "keywords": [],
