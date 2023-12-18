@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { throwValidationErrors } from '../utils/throwValidationError'
 import { _getUserByUserNo, _createUser } from '../data-access/user'
 import { NotFound } from '../errors'
+import PublishMessage from '../utils/publisher'
 
 export const getUser = async (req: Request, res: Response) => {
 	throwValidationErrors(req)
@@ -12,6 +13,8 @@ export const getUser = async (req: Request, res: Response) => {
 		throw new NotFound('User Not Found')
 	}
 
+	PublishMessage(user)
+
 	res.status(200).json(user)
 }
 
@@ -19,6 +22,7 @@ export const createUser = async (req: Request, res: Response) => {
 	throwValidationErrors(req)
 	
 	await _createUser(req.body)
+	PublishMessage({ message: 'User Created!' })
 
 	res.status(200).json({ message: 'User Created!' })
 }
