@@ -4,7 +4,7 @@ import { getUser, createUser } from '../controllers/UserController'
 
 const router: Router = Router()
 
-router.get('/get', [], getUser)
+router.get('/get/:user_no', [], getUser)
 
 router.post('/create', [...createUserValidations], createUser)
 

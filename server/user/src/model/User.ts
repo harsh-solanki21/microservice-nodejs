@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose'
 import bcrypt from 'bcrypt'
 import { IUser } from '../interface/user'
+import { BadRequest } from '../errors'
 
 const UserSchema: Schema = new Schema(
   {
@@ -26,7 +27,7 @@ const UserSchema: Schema = new Schema(
     password: {
       type: String,
       trim: true,
-      minLength: [4, 'Password must be atleast 6 characters long'],
+      minLength: [4, 'Password must be atleast 4 characters long'],
       required: [true, 'Password is Required'],
     },
   },
@@ -38,12 +39,28 @@ const UserSchema: Schema = new Schema(
 UserSchema.index({ email: 1 }, { unique: true })
 
 UserSchema.pre('save', async function (next) {
+	try {
+			if (this.isNew) {
+					const lastUserNo: any = await this.model('User').findOne({}).sort({ createdAt: -1 })
+					this.user_no = !lastUserNo ? 1 : lastUserNo.user_no + 1
+			}
+			next()
+	} catch (error: any) {
+			throw new BadRequest(error.message)
+	}
+})
+
+UserSchema.pre('save', async function (next) {
+	try {
     const user = this
     if (user.isModified('password') && user.password) {
         const salt = await bcrypt.genSalt(10)
         user.password = await bcrypt.hash(user.password, salt)
     }
     next()
+	} catch (error: any) {
+		throw new BadRequest(error.message)
+	}
 })
 
 UserSchema.methods.matchPassword = async function (password: string) {
