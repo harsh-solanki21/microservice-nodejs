@@ -20,6 +20,11 @@ const OrderSchema: Schema = new Schema(
 				}
 			}
 		],
+		status: {
+			type: String,
+			enums: ['CREATED', 'CONFIRMED', 'DELIVERED'],
+			default: 'CREATED'
+		},
 		discount: {  // in percent
 			type: Number,
 			default: 0
