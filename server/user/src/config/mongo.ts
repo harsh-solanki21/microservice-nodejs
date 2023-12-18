@@ -1,16 +1,19 @@
-import mongoose, { ConnectOptions } from 'mongoose'
+import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import { BadRequest } from '../errors'
 
 dotenv.config()
 
-const connectMongo = async () => {
+mongoose.set('strictQuery', false)
+
+const ConnectMongo = async () => {
   try {
-    await mongoose.connect(
-      process.env.MONGO_URI as string,
-      { useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions
-    )
+    await mongoose.connect(process.env.MONGO_URI as string)
+		console.log('Connected to MongoDB')
   } catch (error) {
-    console.log(error)
-    process.exit(1)
+		throw new BadRequest('MongoDB Connection Failed!')
+
   }
 }
+
+export default ConnectMongo
