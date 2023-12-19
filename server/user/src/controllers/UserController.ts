@@ -13,7 +13,7 @@ export const getUser = async (req: Request, res: Response) => {
 		throw new NotFound('User Not Found')
 	}
 
-	await PublishMessage(user)
+	// await PublishMessage(user)
 
 	res.status(200).json(user)
 }
@@ -22,7 +22,7 @@ export const createUser = async (req: Request, res: Response) => {
 	throwValidationErrors(req)
 	
 	await _createUser(req.body)
-	await PublishMessage({ message: 'User Created!' })
+	// await PublishMessage({ message: 'User Created!' })
 
 	res.status(200).json({ message: 'User Created!' })
 }

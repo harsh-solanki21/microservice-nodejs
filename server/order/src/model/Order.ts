@@ -9,10 +9,30 @@ const OrderSchema: Schema = new Schema(
     },
 		order_products: [
 			{
-				product_id: {
+				product_no: {
+					type: Number,
+					required: [true, 'Product Number is Required']
+				},
+				product_name: {
+					type: String,
+					required: [true, 'Product Name is Required']
+				},
+				description: {
+					type: String,
+					required: [true, 'Product description is Required']
+				},
+				price: {
+					type: Number,
+					required: [true, 'Product Price is Required']
+				},
+				available: {
+					type: Boolean,
+					default: true
+				},
+				supplier: {
 					type: Types.ObjectId,
-					ref: 'Product',
-					required: [true, 'Product is Required']
+					ref: 'User',
+					required: [true, 'Supplier is Required']
 				},
 				quantity: {
 					type: Number,

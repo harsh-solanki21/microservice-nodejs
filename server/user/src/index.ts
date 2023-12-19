@@ -8,10 +8,13 @@ import ConnectMongo from './config/mongo'
 import NotFoundRoute from './middlewares/NotFoundHandler'
 import ErrorHandlerMiddleware from './middlewares/ErrorHandler'
 import { loadRoutes } from './routes'
+import SubscribeMessage from './utils/subscriber'
 
 dotenv.config()
 
 const app: Express = express()
+
+SubscribeMessage()
 
 app.use(cors())
 app.use(express.json())

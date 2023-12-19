@@ -1,7 +1,12 @@
 import { Document, Types } from 'mongoose'
 
 interface Products {
-	product_id: Types.ObjectId
+	product_no: number
+	product_name: string
+	description: string
+	price: number
+	available: boolean
+	supplier: Types.ObjectId
 	quantity: number
 }
 

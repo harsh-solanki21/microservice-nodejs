@@ -22,7 +22,7 @@ export const createOrder = async (req: Request, res: Response) => {
 	throwValidationErrors(req)
 	
 	await _createOrder(req.body)
-	await PublishMessage({ message: 'Order Created!' })
+	await PublishMessage({ message: 'Calling Product...' })
 
-	res.status(200).json({ message: 'Order Created!' })
+	res.status(200).json({ message: 'Calling Product...' })
 }
